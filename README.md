@@ -1,28 +1,24 @@
-# Create T3 App
+## NIHR Funding and Awards
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+### Usage
 
-## What's next? How do I make an app with this?
+#### Requirements
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- [Node.js](https://nodejs.org/) 18 or newer
+- npm or a compatible package manager
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+### Development
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+#### Installation
 
-## Learn More
+Clone this repository, navigate into its root directory, and run `npm install`.
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+#### Dev
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+Run `npm run dev` to start a local dev
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+Run `npm run build` to build project to dist folder
 
-## How do I deploy this?
+## Copyright
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+Crown Copyright (National Institute for Health and Care Research)
