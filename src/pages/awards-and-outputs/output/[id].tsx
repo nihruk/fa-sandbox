@@ -1,10 +1,15 @@
 import { type NextPage } from 'next';
+import Head from 'next/head';
 
 import SearchBar from '~/components/search-bar';
 
 const OutputDetails: NextPage = () => {
   return (
     <>
+      <Head>
+        <title>Output tile | NIHR Funding and Awards</title>
+        <meta name="description" content="Output Summary" />
+      </Head>
       <SearchBar />
       <h1>Output Details</h1>
       <p>
