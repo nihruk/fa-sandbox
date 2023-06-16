@@ -1,5 +1,12 @@
+import Awards from '~/components/awards';
+
 function LatestAwards() {
-  return <h1>Latest Awards</h1>;
+  return (
+    <>
+      <h2>Latest Awards</h2>
+      <Awards />
+    </>
+  );
 }
 
 export default LatestAwards;

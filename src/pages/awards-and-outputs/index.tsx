@@ -1,11 +1,18 @@
-import Listing from '~/components/listing';
+import { type NextPage } from 'next';
+
+import Awards from '~/components/awards';
+import Outputs from '~/components/outputs';
 import SearchBar from '~/components/search-bar';
 
-export default function AwardsAndOutputs() {
+const AwardsAndOutputs: NextPage = () => {
   return (
     <>
       <SearchBar />
-      <Listing />
+      <h1>Awards and Outputs</h1>
+      <Awards />
+      <Outputs />
     </>
   );
-}
+};
+
+export default AwardsAndOutputs;

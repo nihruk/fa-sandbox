@@ -9,6 +9,12 @@ function Header() {
       <li>
         <Link href="/awards-and-outputs">Awards and Outputs</Link>
       </li>
+      <li>
+        <Link href="#">Apply for funding</Link>
+      </li>
+      <li>
+        <Link href="#">Contact and feedback</Link>
+      </li>
     </ul>
   );
 }
