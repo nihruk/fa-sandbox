@@ -11,6 +11,10 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <link rel="icon" href="/favicon.ico" />
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link
+          rel="stylesheet"
+          href="https://unpkg.com/@nihruk/design-system@latest/dist/design-system.bundle.css"
+        />
       </Head>
       <Component {...pageProps} />
     </Layout>
