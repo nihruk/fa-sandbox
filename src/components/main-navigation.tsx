@@ -29,9 +29,7 @@ function MainNavigation() {
 
             <li className="nav-item">
               <Link
-                className={
-                  currentRoute === '/awards-and-outputs/**/*' ? 'active nav-link' : 'nav-link'
-                }
+                className={currentRoute === '/awards-and-outputs' ? 'active nav-link' : 'nav-link'}
                 href="/awards-and-outputs">
                 Awards and Outputs
               </Link>

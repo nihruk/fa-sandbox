@@ -20,12 +20,13 @@ function SearchBar() {
           </div>
         </div>
       )}
+      {/* Visible only on the homepage*/}
 
       <div className="container">
         <form className="search-component">
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div className="input-group input-group-lg">
-              <input type="text" className="form-control" placeholder="Search" value="" />
+              <input type="text" className="form-control" placeholder="Search" />
               <button type="button" className="btn-close" disabled aria-label="Close"></button>
               <button type="button" id="search-btn" className="btn btn-btn-outline-secondary">
                 <i className="fas fa-search" aria-hidden="true"></i>
@@ -33,6 +34,7 @@ function SearchBar() {
             </div>
           </div>
         </form>
+        {/* end of form */}
 
         <div className="search-controls">
           <div className="col">
@@ -55,7 +57,9 @@ function SearchBar() {
             </Link>
           </div>
         </div>
+        {/* end of search-control */}
       </div>
+      {/* end of container */}
     </section>
   );
 }
