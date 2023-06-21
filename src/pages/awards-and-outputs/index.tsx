@@ -13,9 +13,10 @@ const AwardsAndOutputs: NextPage = () => {
         <meta name="description" content="" />
       </Head>
       <SearchBar />
-      <h1>Awards and Outputs</h1>
-      <Awards />
-      <Outputs />
+      <div className="container">
+        <Awards />
+        <Outputs />
+      </div>
     </>
   );
 };

@@ -1,6 +1,4 @@
 import { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
-
 export default function Document() {
   return (
     <Html lang="en">
@@ -9,12 +7,15 @@ export default function Document() {
           rel="stylesheet"
           href="https://unpkg.com/@nihruk/design-system@latest/dist/design-system.bundle.css"
         />
+        <script
+          src="https://unpkg.com/@nihruk/design-system@latest/dist/design-system.bundle.js"
+          async
+        />
       </Head>
 
       <body>
         <Main />
         <NextScript />
-        <Script src="https://unpkg.com/@nihruk/design-system@latest/dist/design-system.bundle.js"></Script>
       </body>
     </Html>
   );
