@@ -10,14 +10,14 @@ const awards = [
 
 function Awards() {
   return (
-    <>
+    <div className="container">
       <h3>Awards</h3>
       {awards.map(award => (
         <li key={award.id}>
           <Link href={`/awards-and-outputs/award/${award.id}`}>{award.title}</Link>
         </li>
       ))}
-    </>
+    </div>
   );
 }
 
