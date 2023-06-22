@@ -1,4 +1,6 @@
-function ExploreOtherSites() {
+import Link from "next/link";
+
+export default function ExploreOtherSites() {
   return (
     <>
       <section id="explore-other-sites" className="bg-white">
@@ -10,19 +12,19 @@ function ExploreOtherSites() {
                 <h6 className="fw-bold">NIHR</h6>
                 <ul>
                   <li>
-                    <a href="#">Research funding</a>
+                    <Link href="#">Research funding</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">Career development</a>
+                    <Link href="#">Career development</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">Infrastructure funding</a>
+                    <Link href="#">Infrastructure funding</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">Funding opportunities</a>
+                    <Link href="#">Funding opportunities</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                 </ul>
@@ -34,19 +36,19 @@ function ExploreOtherSites() {
                 <h6 className="fw-bold">NIHR Open Data</h6>
                 <ul>
                   <li>
-                    <a href="#">About HIHR Open Data</a>
+                    <Link href="#">About HIHR Open Data</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">NIHR Data</a>
+                    <Link href="#">NIHR Data</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">NIHR Awards</a>
+                    <Link href="#">NIHR Awards</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">NIHR Maps</a>
+                    <Link href="#">NIHR Maps</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                 </ul>
@@ -58,15 +60,15 @@ function ExploreOtherSites() {
                 <h6 className="fw-bold">Journals Library</h6>
                 <ul>
                   <li>
-                    <a href="#">Five open access journals</a>
+                    <Link href="#">Five open access journals</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">For authors</a>
+                    <Link href="#">For authors</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                   <li>
-                    <a href="#">For reviewers</a>
+                    <Link href="#">For reviewers</Link>
                     <i className="fa-solid fa-up-right-from-square"></i>
                   </li>
                 </ul>
@@ -79,4 +81,3 @@ function ExploreOtherSites() {
   );
 }
 
-export default ExploreOtherSites;
