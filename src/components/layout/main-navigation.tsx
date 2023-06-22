@@ -55,7 +55,7 @@ function MainNavigation() {
                 className={
                   currentRoute === '/contact-and-feedback' ? 'active nav-link' : 'nav-link'
                 }
-                href="#">
+                href="/contact-and-feedback">
                 Contact and feedback
               </Link>
             </li>

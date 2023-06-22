@@ -3,13 +3,19 @@ import Footer from '~/components/ui/footer';
 import ExploreOtherSites from './explore-other-sites';
 import MainNavigation from './main-navigation';
 import SearchBar from './search-bar';
+import { useRouter } from 'next/router';
+
+const excludedPages = ['/advanced-search', '/contact-and-feedback'];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
+  const isExcludedPage = excludedPages.includes(router.pathname);
+
   return (
     <>
       <Header />
       <MainNavigation />
-      <SearchBar />
+      {!isExcludedPage && <SearchBar />}
       <main>
         {children}
         <ExploreOtherSites />
