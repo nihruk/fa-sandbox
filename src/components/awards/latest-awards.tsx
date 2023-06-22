@@ -1,4 +1,4 @@
-import Awards from '~/components/awards';
+import Awards from '~/components/awards/awards';
 
 function LatestAwards() {
   return (
