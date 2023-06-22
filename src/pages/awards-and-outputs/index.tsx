@@ -2,7 +2,7 @@ import { type NextPage } from 'next';
 import Head from 'next/head';
 
 import Awards from '~/components/awards/awards';
-import Outputs from '~/components/outputs';
+import Outputs from '~/components/outputs/outputs';
 import SearchBar from '~/components/search-bar';
 
 const AwardsAndOutputs: NextPage = () => {
