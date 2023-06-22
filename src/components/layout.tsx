@@ -1,5 +1,5 @@
-import Header from '~/components/header';
-import Footer from '~/components/footer';
+import Header from '~/components/ui/header';
+import Footer from '~/components/ui/footer';
 import ExploreOtherSites from './explore-other-sites';
 import MainNavigation from './main-navigation';
 
