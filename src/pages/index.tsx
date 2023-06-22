@@ -1,7 +1,6 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
 import LatestAwards from '~/components/awards/latest-awards';
-import SearchBar from '~/components/search-bar';
 
 const Home: NextPage = () => {
   return (
@@ -11,7 +10,6 @@ const Home: NextPage = () => {
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SearchBar />
       <LatestAwards />
     </>
   );

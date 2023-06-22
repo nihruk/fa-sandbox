@@ -1,7 +1,6 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
 
-import SearchBar from '~/components/search-bar';
 
 const AwardDetails: NextPage = () => {
   return (
@@ -10,7 +9,6 @@ const AwardDetails: NextPage = () => {
         <title>Award title | NIHR Funding and Awards</title>
         <meta name="description" content="Award Summary" />
       </Head>
-      <SearchBar />
       <div className="container">
         <h3>Award Details</h3>
         <p>
