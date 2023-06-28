@@ -1,8 +1,9 @@
+import React from 'react';
 import { type NextPage } from 'next';
 import Head from 'next/head';
 import LatestAwards from '~/components/awards/latest-awards';
 
-const Home: NextPage = () => {
+const HomePage: NextPage = () => {
   return (
     <>
       <Head>
@@ -15,4 +16,4 @@ const Home: NextPage = () => {
   );
 };
 
-export default Home;
+export default HomePage;
