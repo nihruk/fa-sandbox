@@ -1,8 +1,7 @@
 import { type NextPage } from 'next';
 import Head from 'next/head';
 
-
-const OutputDetails: NextPage = () => {
+const OutputDetailsPage: NextPage = () => {
   return (
     <>
       <Head>
@@ -21,4 +20,4 @@ const OutputDetails: NextPage = () => {
   );
 };
 
-export default OutputDetails;
+export default OutputDetailsPage;

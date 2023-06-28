@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -31,8 +32,8 @@ function MainNavigation() {
               <Link
                 className={
                   currentRoute === '/awards-and-outputs' ||
-                  currentRoute === '/awards-and-outputs/award/[id]' ||
-                  currentRoute === '/awards-and-outputs/output/[id]'
+                  currentRoute === '/awards-and-outputs/awards/[awardId]' ||
+                  currentRoute === '/awards-and-outputs/outputs/[outputId]'
                     ? 'active nav-link'
                     : 'nav-link'
                 }
