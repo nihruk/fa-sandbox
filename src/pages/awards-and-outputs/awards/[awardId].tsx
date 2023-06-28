@@ -1,22 +1,21 @@
 import React from 'react';
-import { type NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
-const AwardDetailsPage: NextPage = () => {
-  const router = useRouter();
+import { type NextPage } from 'next';
+import { type InferGetStaticPropsType, type GetStaticProps, type GetStaticPaths } from 'next';
+import { type Award, type Data } from '~/types';
 
-  console.log(router.pathname);
-  console.log(router.query);
+const AwardDetailsPage: NextPage = ({ award }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { award_title } = award as Award;
 
   return (
     <>
       <Head>
-        <title>Award title | NIHR Funding and Awards</title>
+        <title>{award_title} | NIHR Funding and Awards</title>
         <meta name="description" content="Award Summary" />
       </Head>
       <div className="container">
-        <h3>Award Details</h3>
+        <h3>{award_title}</h3>
         <p>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto illo voluptatibus iure modi
           consequatur consectetur laudantium autem molestiae assumenda. Obcaecati beatae assumenda
@@ -25,6 +24,31 @@ const AwardDetailsPage: NextPage = () => {
       </div>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async context => {
+  const { params } = context;
+  const awardId = params?.awardId as string;
+
+  const response = await fetch(`https://fundingawards.nihr.ac.uk/api/project?id=${awardId}`);
+  const award = (await response.json()) as Award;
+
+  return {
+    props: {
+      award
+    }
+  };
+};
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
+  const posts = (await response.json()) as Data;
+
+  const paths = posts.documents.map(award => ({
+    params: { awardId: award.id }
+  }));
+
+  return { paths, fallback: 'blocking' };
 };
 
 export default AwardDetailsPage;
