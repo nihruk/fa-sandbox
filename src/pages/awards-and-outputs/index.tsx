@@ -1,10 +1,11 @@
+import React from 'react';
 import { type NextPage } from 'next';
 import Head from 'next/head';
 
 import Awards from '~/components/awards/awards';
 import Outputs from '~/components/outputs/outputs';
 
-const AwardsAndOutputs: NextPage = () => {
+const AwardsAndOutputsPage: NextPage = () => {
   return (
     <>
       <Head>
@@ -19,4 +20,4 @@ const AwardsAndOutputs: NextPage = () => {
   );
 };
 
-export default AwardsAndOutputs;
+export default AwardsAndOutputsPage;
