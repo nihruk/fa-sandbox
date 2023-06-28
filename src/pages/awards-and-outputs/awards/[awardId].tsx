@@ -1,8 +1,14 @@
+import React from 'react';
 import { type NextPage } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
+const AwardDetailsPage: NextPage = () => {
+  const router = useRouter();
 
-const AwardDetails: NextPage = () => {
+  console.log(router.pathname);
+  console.log(router.query);
+
   return (
     <>
       <Head>
@@ -21,4 +27,4 @@ const AwardDetails: NextPage = () => {
   );
 };
 
-export default AwardDetails;
+export default AwardDetailsPage;

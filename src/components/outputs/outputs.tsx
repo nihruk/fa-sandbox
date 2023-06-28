@@ -1,3 +1,4 @@
+import React from 'react';
 import Link from 'next/link';
 
 const outputs = [
@@ -14,7 +15,7 @@ function Outputs() {
       <h3>Outputs</h3>
       {outputs.map(output => (
         <li key={output.id}>
-          <Link href={`/awards-and-outputs/output/${output.id}`}>{output.title}</Link>
+          <Link href={`/awards-and-outputs/outputs/${output.id}`}>{output.title}</Link>
         </li>
       ))}
     </>
