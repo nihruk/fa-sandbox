@@ -16,8 +16,10 @@ const HomePage: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticPr
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <h2>Latest Awards</h2>
-      <Awards awards={documents} />
+      <div className="container">
+        <h2>Latest Awards</h2>
+        <Awards awards={documents} />
+      </div>
     </>
   );
 };
@@ -25,8 +27,6 @@ const HomePage: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticPr
 export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
   const data = (await response.json()) as Data;
-
-  //console.log(posts);
 
   return {
     props: {
