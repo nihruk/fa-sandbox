@@ -1,37 +1,37 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { type NextPage } from 'next';
 import { type InferGetStaticPropsType, type GetStaticProps, type GetStaticPaths } from 'next';
 import { type Award, type Data } from '~/types';
 
-const AwardDetailsPage: NextPage = ({ award }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { award_title } = award as Award;
-
+export default function AwardDetailsPage({
+  award
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
-        <title>{award_title} | NIHR Funding and Awards</title>
-        <meta name="description" content="Award Summary" />
+        <title>{award.award_title} | NIHR Funding and Awards</title>
+        <meta name="description" content="description" />
       </Head>
       <div className="container">
-        <h3>{award_title}</h3>
+        <h3>{award.award_title}</h3>
+
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto illo voluptatibus iure modi
-          consequatur consectetur laudantium autem molestiae assumenda. Obcaecati beatae assumenda
-          accusantium dignissimos ea voluptatum asperiores quod quas dolore?
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, voluptatum alias aliquam
+          nisi ea debitis dolor. Porro perspiciatis quo deleniti ducimus esse repellat mollitia
+          ratione quam. Vel illo accusantium autem?
         </p>
       </div>
     </>
   );
-};
+}
 
-export const getStaticProps: GetStaticProps = async context => {
+export const getStaticProps: GetStaticProps<{ award: Award }> = async context => {
   const { params } = context;
   const awardId = params?.awardId as string;
 
   const response = await fetch(`https://fundingawards.nihr.ac.uk/api/project?id=${awardId}`);
-  const award = (await response.json()) as Award;
+  const award: Award = (await response.json()) as Award;
 
   return {
     props: {
@@ -50,5 +50,3 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return { paths, fallback: 'blocking' };
 };
-
-export default AwardDetailsPage;

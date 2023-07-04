@@ -1,14 +1,12 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { type NextPage } from 'next';
 import { type InferGetStaticPropsType, type GetStaticProps } from 'next';
 import { type Data } from '~/types';
 
 import Awards from '~/components/awards/awards';
 
-const HomePage: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { documents } = data as Data;
+export default function HomePage({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
@@ -18,13 +16,13 @@ const HomePage: NextPage = ({ data }: InferGetStaticPropsType<typeof getStaticPr
       </Head>
       <div className="container">
         <h2>Latest Awards</h2>
-        <Awards awards={documents} />
+        <Awards awards={data.documents} />
       </div>
     </>
   );
-};
+}
 
-export const getStaticProps: GetStaticProps = async () => {
+export const getStaticProps: GetStaticProps<{ data: Data }> = async () => {
   const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
   const data = (await response.json()) as Data;
 
@@ -34,5 +32,3 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   };
 };
-
-export default HomePage;
