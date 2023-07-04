@@ -7,6 +7,14 @@ import { type Award, type Data } from '~/types';
 export default function AwardDetailsPage({
   award
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const awardObject = Object.entries(award).map(([key, value]) => {
+    return (
+      <div key={key}>
+        <strong>{key} :</strong> {value.toString()}
+      </div>
+    );
+  });
+
   return (
     <>
       <Head>
@@ -16,11 +24,7 @@ export default function AwardDetailsPage({
       <div className="container">
         <h3>{award.award_title}</h3>
 
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde, voluptatum alias aliquam
-          nisi ea debitis dolor. Porro perspiciatis quo deleniti ducimus esse repellat mollitia
-          ratione quam. Vel illo accusantium autem?
-        </p>
+        {awardObject}
       </div>
     </>
   );
