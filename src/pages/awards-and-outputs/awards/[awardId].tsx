@@ -2,7 +2,9 @@ import React from 'react';
 import Head from 'next/head';
 
 import { type InferGetStaticPropsType, type GetStaticProps, type GetStaticPaths } from 'next';
-import { type Award, type Data } from '~/types';
+import { type Award } from '~/types';
+
+import { getLatestAwards, getAwardById } from '~/utils/award-util';
 
 export default function AwardDetailsPage({
   award
@@ -34,8 +36,7 @@ export const getStaticProps: GetStaticProps<{ award: Award }> = async context =>
   const { params } = context;
   const awardId = params?.awardId as string;
 
-  const response = await fetch(`https://fundingawards.nihr.ac.uk/api/project?id=${awardId}`);
-  const award: Award = (await response.json()) as Award;
+  const award = await getAwardById(awardId);
 
   return {
     props: {
@@ -45,10 +46,9 @@ export const getStaticProps: GetStaticProps<{ award: Award }> = async context =>
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
-  const posts = (await response.json()) as Data;
+  const data = await getLatestAwards();
 
-  const paths = posts.documents.map(award => ({
+  const paths = data.documents.map(award => ({
     params: { awardId: award.id }
   }));
 

@@ -6,6 +6,8 @@ import { type Data } from '~/types';
 
 import Awards from '~/components/awards/awards';
 
+import { getLatestAwards } from '~/utils/award-util';
+
 export default function HomePage({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -23,8 +25,7 @@ export default function HomePage({ data }: InferGetStaticPropsType<typeof getSta
 }
 
 export const getStaticProps: GetStaticProps<{ data: Data }> = async () => {
-  const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
-  const data = (await response.json()) as Data;
+  const data = await getLatestAwards();
 
   return {
     props: {
