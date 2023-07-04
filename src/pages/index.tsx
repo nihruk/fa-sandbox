@@ -4,9 +4,8 @@ import Head from 'next/head';
 import { type InferGetStaticPropsType, type GetStaticProps } from 'next';
 import { type Data } from '~/types';
 
-import Awards from '~/components/awards/awards';
-
 import { getLatestAwards } from '~/utils/award-util';
+import LatestAwards from '~/components/awards/latest-awards';
 
 export default function HomePage({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
@@ -16,9 +15,9 @@ export default function HomePage({ data }: InferGetStaticPropsType<typeof getSta
         <meta name="description" content="" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+
       <div className="container">
-        <h2>Latest Awards</h2>
-        <Awards awards={data.documents} />
+        <LatestAwards awards={data.documents} />
       </div>
     </>
   );

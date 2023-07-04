@@ -21,7 +21,7 @@ export default function AwardDetailsPage({
     <>
       <Head>
         <title>{award.award_title} | NIHR Funding and Awards</title>
-        <meta name="description" content="description" />
+        <meta name="description" content={award.app_plain_english_summary} />
       </Head>
       <div className="container">
         <h3>{award.award_title}</h3>
