@@ -1,6 +1,5 @@
 import Header from '~/components/ui/header';
 import Footer from '~/components/ui/footer';
-import ExploreOtherSites from './explore-other-sites';
 import MainNavigation from './main-navigation';
 import SearchBar from './search-bar';
 import { useRouter } from 'next/router';
@@ -16,10 +15,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Header />
       <MainNavigation />
       {!isExcludedPage && <SearchBar />}
-      <main>
-        {children}
-        <ExploreOtherSites />
-      </main>
+      <main>{children}</main>
       <Footer />
     </>
   );

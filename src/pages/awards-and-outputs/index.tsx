@@ -1,11 +1,17 @@
 import React from 'react';
-import { type NextPage } from 'next';
 import Head from 'next/head';
+
+import { type NextPage } from 'next';
+import { type InferGetStaticPropsType, type GetStaticProps } from 'next';
+import { type Data } from '~/types';
 
 import Awards from '~/components/awards/awards';
 import Outputs from '~/components/outputs/outputs';
 
-const AwardsAndOutputsPage: NextPage = () => {
+const AwardsAndOutputsPage: NextPage = ({
+  data
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const { documents } = data as Data;
   return (
     <>
       <Head>
@@ -13,11 +19,23 @@ const AwardsAndOutputsPage: NextPage = () => {
         <meta name="description" content="" />
       </Head>
       <div className="container">
-        <Awards />
+        <h2>Awards</h2>
+        <Awards awards={documents} />
         <Outputs />
       </div>
     </>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
+  const data = (await response.json()) as Data;
+
+  return {
+    props: {
+      data
+    }
+  };
 };
 
 export default AwardsAndOutputsPage;

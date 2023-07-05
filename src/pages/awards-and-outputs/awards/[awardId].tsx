@@ -1,30 +1,56 @@
 import React from 'react';
-import { type NextPage } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 
-const AwardDetailsPage: NextPage = () => {
-  const router = useRouter();
+import { type InferGetStaticPropsType, type GetStaticProps, type GetStaticPaths } from 'next';
+import { type Award } from '~/types';
 
-  console.log(router.pathname);
-  console.log(router.query);
+import { getLatestAwards, getAwardById } from '~/utils/award-util';
+
+export default function AwardDetailsPage({
+  award
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const awardObject = Object.entries(award).map(([key, value]) => {
+    return (
+      <div key={key}>
+        <strong>{key} :</strong> {value.toString()}
+      </div>
+    );
+  });
 
   return (
     <>
       <Head>
-        <title>Award title | NIHR Funding and Awards</title>
-        <meta name="description" content="Award Summary" />
+        <title>{award.award_title} | NIHR Funding and Awards</title>
+        <meta name="description" content={award.app_plain_english_summary} />
       </Head>
       <div className="container">
-        <h3>Award Details</h3>
-        <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Iusto illo voluptatibus iure modi
-          consequatur consectetur laudantium autem molestiae assumenda. Obcaecati beatae assumenda
-          accusantium dignissimos ea voluptatum asperiores quod quas dolore?
-        </p>
+        <h3>{award.award_title}</h3>
+
+        {awardObject}
       </div>
     </>
   );
+}
+
+export const getStaticProps: GetStaticProps<{ award: Award }> = async context => {
+  const { params } = context;
+  const awardId = params?.awardId as string;
+
+  const award = await getAwardById(awardId);
+
+  return {
+    props: {
+      award
+    }
+  };
 };
 
-export default AwardDetailsPage;
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await getLatestAwards();
+
+  const paths = data.documents.map(award => ({
+    params: { awardId: award.id }
+  }));
+
+  return { paths, fallback: 'blocking' };
+};
