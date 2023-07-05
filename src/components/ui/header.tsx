@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
-function Header() {
+export default function Header() {
   return (
     <>
       <header className="pt-3 pb-3 bg-white main-header">
@@ -26,5 +26,3 @@ function Header() {
     </>
   );
 }
-
-export default Header;

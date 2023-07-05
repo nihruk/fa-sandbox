@@ -1,7 +1,6 @@
-import { type NextPage } from 'next';
 import Head from 'next/head';
 
-const ContactAndFeedback: NextPage = () => {
+export default function ContactAndFeedbackPage() {
   return (
     <>
       <Head>
@@ -18,6 +17,4 @@ const ContactAndFeedback: NextPage = () => {
       </div>
     </>
   );
-};
-
-export default ContactAndFeedback;
+}

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-function SearchBar() {
+export default function SearchBar() {
   const router = useRouter();
   const currentRoute = router.pathname;
 
@@ -63,5 +63,3 @@ function SearchBar() {
     </section>
   );
 }
-
-export default SearchBar;

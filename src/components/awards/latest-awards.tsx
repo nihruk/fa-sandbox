@@ -3,7 +3,7 @@ import Link from 'next/link';
 
 import { type Award } from '~/types';
 
-function LatestAwards(props: { awards: Award[] }) {
+export default function LatestAwards(props: { awards: Award[] }) {
   const { awards } = props;
   return (
     <div className="container">
@@ -34,5 +34,3 @@ function LatestAwards(props: { awards: Award[] }) {
     </div>
   );
 }
-
-export default LatestAwards;

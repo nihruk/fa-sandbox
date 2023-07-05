@@ -1,16 +1,15 @@
 import React from 'react';
 import Head from 'next/head';
 
-import { type NextPage } from 'next';
 import { type InferGetStaticPropsType, type GetStaticProps } from 'next';
 import { type Data } from '~/types';
 
 import Awards from '~/components/awards/awards';
 import Outputs from '~/components/outputs/outputs';
 
-const AwardsAndOutputsPage: NextPage = ({
+export default function AwardsAndOutputsPage({
   data
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const { documents } = data as Data;
   return (
     <>
@@ -25,7 +24,7 @@ const AwardsAndOutputsPage: NextPage = ({
       </div>
     </>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async () => {
   const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
@@ -37,5 +36,3 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   };
 };
-
-export default AwardsAndOutputsPage;

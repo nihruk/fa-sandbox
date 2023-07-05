@@ -1,8 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
 import { type Award } from '~/types';
 
-function Awards(props: { awards: Award[] }) {
+export default function Awards(props: { awards: Award[] }) {
   const { awards } = props;
 
   return (
@@ -15,5 +14,3 @@ function Awards(props: { awards: Award[] }) {
     </>
   );
 }
-
-export default Awards;
