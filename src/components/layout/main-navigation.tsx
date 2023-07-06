@@ -1,8 +1,7 @@
-import React from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-function MainNavigation() {
+export default function MainNavigation() {
   const router = useRouter();
   const currentRoute = router.pathname;
 
@@ -66,5 +65,3 @@ function MainNavigation() {
     </nav>
   );
 }
-
-export default MainNavigation;

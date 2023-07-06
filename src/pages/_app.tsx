@@ -1,9 +1,23 @@
-import { type AppType } from 'next/dist/shared/lib/utils';
+import { useState } from 'react';
+import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Layout from '~/components/layout/layout';
 import '~/styles/globals.css';
 
-const MyApp: AppType = ({ Component, pageProps }) => {
+import {
+  Hydrate,
+  QueryClient,
+  QueryClientProvider,
+  type DehydratedState
+} from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+export default function MyApp({
+  Component,
+  pageProps
+}: AppProps<{ dehydratedState: DehydratedState }>) {
+  const [queryClient] = useState(() => new QueryClient());
+
   return (
     <Layout>
       <Head>
@@ -12,9 +26,12 @@ const MyApp: AppType = ({ Component, pageProps }) => {
         <meta name="description" content="" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
       </Head>
-      <Component {...pageProps} />
+      <QueryClientProvider client={queryClient}>
+        <Hydrate state={pageProps.dehydratedState}>
+          <Component {...pageProps} />
+        </Hydrate>
+        <ReactQueryDevtools />
+      </QueryClientProvider>
     </Layout>
   );
-};
-
-export default MyApp;
+}

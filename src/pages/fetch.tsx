@@ -1,30 +1,43 @@
-import React from 'react';
-import Link from 'next/link';
+import { type GetStaticProps } from 'next';
+import Head from 'next/head';
+import Awards from '~/components/awards/awards';
 
-import { type InferGetStaticPropsType, type GetStaticProps } from 'next';
-import { type Data } from '~/types';
+import { getLatestAwards } from '~/utils/award-util';
 
-export default function Posts({ posts }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { documents } = posts as Data;
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
+
+export default function Posts() {
+  const { isLoading, isSuccess, error, data } = useQuery(['getLatestAwards'], () =>
+    getLatestAwards()
+  );
+
+  if (isLoading) return 'Loading...';
+
+  if (error) return 'An error has occurred';
 
   return (
-    <div className="container">
-      {documents.map(award => (
-        <li key={award.id}>
-          <Link href={`/awards-and-outputs/awards/${award.id}`}>{award.award_title}</Link>
-        </li>
-      ))}
-    </div>
+    <>
+      <Head>
+        <title>NIHR Funding and Awards</title>
+      </Head>
+
+      {isSuccess && (
+        <div className="container">
+          <Awards awards={data.documents} />
+        </div>
+      )}
+    </>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
-  const posts = (await response.json()) as Data;
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(['getLatestAwards'], () => getLatestAwards());
 
   return {
     props: {
-      posts
+      dehydratedState: dehydrate(queryClient)
     }
   };
 };

@@ -15,7 +15,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <Header />
       <MainNavigation />
       {!isExcludedPage && <SearchBar />}
-      <main>{children}</main>
+      <main>
+        <div className="container">{children}</div>
+      </main>
       <Footer />
     </>
   );

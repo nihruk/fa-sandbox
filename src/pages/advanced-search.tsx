@@ -1,7 +1,6 @@
-import { type NextPage } from 'next';
 import Head from 'next/head';
 
-const AdvancedSearch: NextPage = () => {
+export default function AdvancedSearchPage() {
   return (
     <>
       <Head>
@@ -18,6 +17,4 @@ const AdvancedSearch: NextPage = () => {
       </div>
     </>
   );
-};
-
-export default AdvancedSearch;
+}

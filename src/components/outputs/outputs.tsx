@@ -1,4 +1,3 @@
-import React from 'react';
 import Link from 'next/link';
 
 const outputs = [
@@ -9,7 +8,7 @@ const outputs = [
   { id: 5, title: 'Output name 5' }
 ];
 
-function Outputs() {
+export default function Outputs() {
   return (
     <>
       <h3>Outputs</h3>
@@ -21,5 +20,3 @@ function Outputs() {
     </>
   );
 }
-
-export default Outputs;

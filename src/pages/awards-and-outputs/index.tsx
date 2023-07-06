@@ -1,41 +1,45 @@
-import React from 'react';
+import { type GetStaticProps } from 'next';
 import Head from 'next/head';
 
-import { type NextPage } from 'next';
-import { type InferGetStaticPropsType, type GetStaticProps } from 'next';
-import { type Data } from '~/types';
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
+import { getLatestAwards } from '~/utils/award-util';
 
 import Awards from '~/components/awards/awards';
 import Outputs from '~/components/outputs/outputs';
+import Loader from '~/components/ui/loader';
+import Error from '~/components/ui/error';
 
-const AwardsAndOutputsPage: NextPage = ({
-  data
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const { documents } = data as Data;
+export default function AwardsAndOutputsPage() {
+  const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
+
+  if (isLoading) return <Loader />;
+
+  if (error) return <Error error={error.toString()} />;
   return (
     <>
       <Head>
         <title>Awards and Outputs | NIHR Funding and Awards</title>
         <meta name="description" content="" />
       </Head>
-      <div className="container">
-        <h2>Awards</h2>
-        <Awards awards={documents} />
-        <Outputs />
-      </div>
+      {data && (
+        <div className="container">
+          <h2>Awards</h2>
+          <Awards awards={data.documents} />
+          <Outputs />
+        </div>
+      )}
     </>
   );
-};
+}
 
 export const getStaticProps: GetStaticProps = async () => {
-  const response = await fetch('https://fundingawards.nihr.ac.uk/api/latest/6');
-  const data = (await response.json()) as Data;
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(['getLatestAwards'], () => getLatestAwards());
 
   return {
     props: {
-      data
+      dehydratedState: dehydrate(queryClient)
     }
   };
 };
-
-export default AwardsAndOutputsPage;

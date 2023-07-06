@@ -1,8 +1,6 @@
-import React from 'react';
-import { type NextPage } from 'next';
 import Head from 'next/head';
 
-const NotFoundPage: NextPage = () => {
+export default function NotFoundPage() {
   return (
     <>
       <Head>
@@ -15,6 +13,4 @@ const NotFoundPage: NextPage = () => {
       </div>
     </>
   );
-};
-
-export default NotFoundPage;
+}
