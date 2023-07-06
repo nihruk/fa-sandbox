@@ -7,6 +7,9 @@ import { type Award } from '~/types';
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { getLatestAwards, getAwardById } from '~/utils/award-util';
 
+import Loader from '~/components/ui/loader';
+import Error from '~/components/ui/error';
+
 export default function AwardDetailsPage() {
   const router = useRouter();
   const { awardId } = router.query;
@@ -15,16 +18,9 @@ export default function AwardDetailsPage() {
     getAwardById(awardId as string)
   );
 
-  // TODO: Add a loading component
-  if (isLoading) return <div className="container">Loading...</div>;
+  if (isLoading) return <Loader />;
 
-  // TODO: Add a error component
-  if (error)
-    return (
-      <div className="container">
-        <p>{error.toString()}</p>
-      </div>
-    );
+  if (error) return <Error error={error.toString()} />;
 
   const awardObject = Object.entries(data as Award).map(([key, value]) => {
     return (

@@ -1,20 +1,19 @@
+import { type GetStaticProps } from 'next';
 import Head from 'next/head';
 
-import { type GetStaticProps } from 'next';
-
-import { getLatestAwards } from '~/utils/award-util';
-import LatestAwards from '~/components/awards/latest-awards';
-
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
+import { getLatestAwards } from '~/utils/award-util';
+
+import LatestAwards from '~/components/awards/latest-awards';
+import Loader from '~/components/ui/loader';
+import Error from '~/components/ui/error';
 
 export default function HomePage() {
   const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
 
-  // TODO: Add a loading spinner component
-  if (isLoading) return 'Loading...';
+  if (isLoading) return <Loader />;
 
-  // TODO: Add a error message
-  if (error) return `An error has occurred`;
+  if (error) return <Error error={error.toString()} />;
 
   return (
     <>
