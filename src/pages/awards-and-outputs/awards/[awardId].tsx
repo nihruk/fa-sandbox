@@ -1,15 +1,32 @@
-import React from 'react';
+import { type GetStaticProps, type GetStaticPaths } from 'next';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 
-import { type InferGetStaticPropsType, type GetStaticProps, type GetStaticPaths } from 'next';
 import { type Award } from '~/types';
 
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { getLatestAwards, getAwardById } from '~/utils/award-util';
 
-export default function AwardDetailsPage({
-  award
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  const awardObject = Object.entries(award).map(([key, value]) => {
+export default function AwardDetailsPage() {
+  const router = useRouter();
+  const { awardId } = router.query;
+
+  const { isLoading, error, data } = useQuery(['getAwardById', awardId], () =>
+    getAwardById(awardId as string)
+  );
+
+  // TODO: Add a loading component
+  if (isLoading) return <div className="container">Loading...</div>;
+
+  // TODO: Add a error component
+  if (error)
+    return (
+      <div className="container">
+        <p>{error.toString()}</p>
+      </div>
+    );
+
+  const awardObject = Object.entries(data as Award).map(([key, value]) => {
     return (
       <div key={key}>
         <strong>{key} :</strong> {value.toString()}
@@ -19,28 +36,32 @@ export default function AwardDetailsPage({
 
   return (
     <>
-      <Head>
-        <title>{award.award_title} | NIHR Funding and Awards</title>
-        <meta name="description" content={award.app_plain_english_summary} />
-      </Head>
-      <div className="container">
-        <h3>{award.award_title}</h3>
-
-        {awardObject}
-      </div>
+      {data && (
+        <>
+          <Head>
+            <title>{data.award_title} | NIHR Funding and Awards</title>
+            <meta name="description" content={data.app_plain_english_summary} />
+          </Head>
+          <div className="container">
+            <h3>{data.award_title}</h3>
+            {awardObject}
+          </div>
+        </>
+      )}
     </>
   );
 }
 
-export const getStaticProps: GetStaticProps<{ award: Award }> = async context => {
+export const getStaticProps: GetStaticProps = async context => {
   const { params } = context;
   const awardId = params?.awardId as string;
 
-  const award = await getAwardById(awardId);
+  const queryClient = new QueryClient();
+  await queryClient.prefetchQuery(['getAwardById', awardId], () => getAwardById(awardId));
 
   return {
     props: {
-      award
+      dehydratedState: dehydrate(queryClient)
     }
   };
 };

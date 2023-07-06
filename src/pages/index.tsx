@@ -10,6 +10,7 @@ import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 export default function HomePage() {
   const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
 
+  // TODO: Add a loading spinner component
   if (isLoading) return 'Loading...';
 
   // TODO: Add a error message

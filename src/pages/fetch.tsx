@@ -1,4 +1,3 @@
-import React from 'react';
 import { type GetStaticProps } from 'next';
 import Head from 'next/head';
 import Awards from '~/components/awards/awards';
