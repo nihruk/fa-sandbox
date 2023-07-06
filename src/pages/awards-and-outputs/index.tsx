@@ -6,15 +6,16 @@ import { getLatestAwards } from '~/utils/award-util';
 
 import Awards from '~/components/awards/awards';
 import Outputs from '~/components/outputs/outputs';
-import Loader from '~/components/ui/loader';
-import Error from '~/components/ui/error';
+import Spinner from '~/components/ui/spinner';
+import Alert from '~/components/ui/alert';
 
 export default function AwardsAndOutputsPage() {
   const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Spinner />;
 
-  if (error) return <Error error={error.toString()} />;
+  if (error) return <Alert variant="danger" error={error.toString()} />;
+
   return (
     <>
       <Head>
