@@ -1,13 +1,20 @@
-import React from 'react';
 import Head from 'next/head';
 
-import { type InferGetStaticPropsType, type GetStaticProps } from 'next';
-import { type Data } from '~/types';
+import { type GetStaticProps } from 'next';
 
 import { getLatestAwards } from '~/utils/award-util';
 import LatestAwards from '~/components/awards/latest-awards';
 
-export default function HomePage({ data }: InferGetStaticPropsType<typeof getStaticProps>) {
+import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
+
+export default function HomePage() {
+  const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
+
+  if (isLoading) return 'Loading...';
+
+  // TODO: Add a error message
+  if (error) return `An error has occurred`;
+
   return (
     <>
       <Head>
@@ -16,19 +23,23 @@ export default function HomePage({ data }: InferGetStaticPropsType<typeof getSta
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="container">
-        <LatestAwards awards={data.documents} />
-      </div>
+      {data && (
+        <div className="container">
+          <LatestAwards awards={data.documents} />
+        </div>
+      )}
     </>
   );
 }
 
-export const getStaticProps: GetStaticProps<{ data: Data }> = async () => {
-  const data = await getLatestAwards();
+export const getStaticProps: GetStaticProps = async () => {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery(['getLatestAwards'], () => getLatestAwards());
 
   return {
     props: {
-      data
+      dehydratedState: dehydrate(queryClient)
     }
   };
 };
