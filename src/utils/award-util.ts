@@ -13,3 +13,11 @@ export async function getAwardById(awardId: string) {
 
   return award;
 }
+
+export function convertAwardData(awardDate: string) {
+  const convertedDate = new Date(awardDate).toLocaleDateString('en-GB', {
+    month: 'long',
+    year: 'numeric'
+  });
+  return convertedDate;
+}

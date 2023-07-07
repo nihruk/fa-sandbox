@@ -5,9 +5,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import { type Award } from '~/types';
+import { convertAwardData } from '~/utils/award-util';
 
 export default function LatestAwards(props: { awards: Award[] }) {
   const { awards } = props;
+
   return (
     <>
       {awards.map(award => (
@@ -17,9 +19,11 @@ export default function LatestAwards(props: { awards: Award[] }) {
               <Link href={`/awards-and-outputs/awards/${award.id}`}>{award.award_title}</Link>
             </h3>
             <p>{award.award_type} Award</p>
-            <p>
-              Start Date: <strong>{award.start_date}</strong>
-            </p>
+            {award.start_date && (
+              <p>
+                Start Date: <strong>{convertAwardData(award.start_date)}</strong>
+              </p>
+            )}
           </Col>
           <Col lg="4">
             <p>
