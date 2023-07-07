@@ -1,9 +1,11 @@
 import Alert from 'react-bootstrap/Alert';
 
 export default function Warning(props: { error: string; variant: string }) {
+  const { error, variant } = props;
+
   return (
-    <Alert key={props.variant} variant={props.variant}>
-      {props.error}
+    <Alert key={variant} variant={variant}>
+      {error}
     </Alert>
   );
 }

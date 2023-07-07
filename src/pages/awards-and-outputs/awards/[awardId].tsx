@@ -22,6 +22,7 @@ export default function AwardDetailsPage() {
 
   if (error) return <Alert variant="danger" error={error.toString()} />;
 
+  // Dev & Testing purposes only
   const awardObject = Object.entries(data as Award).map(([key, value]) => {
     return (
       <div key={key}>
@@ -35,7 +36,9 @@ export default function AwardDetailsPage() {
       {data && (
         <>
           <Head>
-            <title>{data.award_title} | NIHR Funding and Awards</title>
+            <title>
+              {data ? `${data.award_title} | NIHR Funding and Awards` : 'NIHR Funding and Awards'}
+            </title>
             <meta name="description" content={data.app_plain_english_summary} />
           </Head>
           <div className="container">

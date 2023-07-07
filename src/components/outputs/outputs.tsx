@@ -11,7 +11,6 @@ const outputs = [
 export default function Outputs() {
   return (
     <>
-      <h3>Outputs</h3>
       {outputs.map(output => (
         <li key={output.id}>
           <Link href={`/awards-and-outputs/outputs/${output.id}`}>{output.title}</Link>

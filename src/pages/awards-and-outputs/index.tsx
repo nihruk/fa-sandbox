@@ -23,11 +23,12 @@ export default function AwardsAndOutputsPage() {
         <meta name="description" content="" />
       </Head>
       {data && (
-        <div className="container">
+        <>
           <h2>Awards</h2>
           <Awards awards={data.documents} />
+          <h2>Outputs</h2>
           <Outputs />
-        </div>
+        </>
       )}
     </>
   );

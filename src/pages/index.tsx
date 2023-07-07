@@ -20,13 +20,13 @@ export default function HomePage() {
       <Head>
         <title>NIHR Funding and Awards</title>
         <meta name="description" content="" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {data && (
-        <div className="container">
+        <>
+          <h3>Latest Awards</h3>
           <LatestAwards awards={data.documents} />
-        </div>
+        </>
       )}
     </>
   );
