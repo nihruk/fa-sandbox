@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Layout from '~/components/layout/layout';
 import '~/styles/globals.css';
-import { SearchProvider } from '~/context/SearchContext';
+import { SearchStateProvider } from '~/context/search-context';
 
 import {
   Hydrate,
@@ -20,21 +20,22 @@ export default function MyApp({
   const [queryClient] = useState(() => new QueryClient());
 
   return (
-    <Layout>
-      <Head>
-        <title>NIHR Funding and Awards</title>
-        <link rel="icon" href="/favicon.ico" />
-        <meta name="description" content="" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-      </Head>
-      <QueryClientProvider client={queryClient}>
-        <Hydrate state={pageProps.dehydratedState}>
-          <SearchProvider>
+    <SearchStateProvider>
+      <Layout>
+        <Head>
+          <title>NIHR Funding and Awards</title>
+          <link rel="icon" href="/favicon.ico" />
+          <meta name="description" content="" />
+          <meta name="viewport" content="width=device-width, initial-scale=1" />
+        </Head>
+
+        <QueryClientProvider client={queryClient}>
+          <Hydrate state={pageProps.dehydratedState}>
             <Component {...pageProps} />
-          </SearchProvider>
-        </Hydrate>
-        <ReactQueryDevtools />
-      </QueryClientProvider>
-    </Layout>
+          </Hydrate>
+          <ReactQueryDevtools />
+        </QueryClientProvider>
+      </Layout>
+    </SearchStateProvider>
   );
 }

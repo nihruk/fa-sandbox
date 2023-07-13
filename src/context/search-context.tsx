@@ -5,21 +5,25 @@ type SearchStateType = {
   searchTextField: string;
 };
 
-type Props = {
-  children: ReactNode;
-};
-
 type Action = {
   type: string;
 };
 
 type SearchDispatchType = Dispatch<Action>;
 
-const SearchContext = createContext<SearchStateType | null>(null);
+export const SearchContext = createContext<SearchStateType | null>(null);
 
-const SearchDispatchContext = createContext<SearchDispatchType | null>(null);
+export const SearchDispatchContext = createContext<SearchDispatchType | null>(null);
 
-export function SearchProvider({ children }: Props) {
+export function useSearchState() {
+  return useContext(SearchContext);
+}
+
+export function useSearchStateDispatch() {
+  return useContext(SearchDispatchContext);
+}
+
+export function SearchStateProvider({ children }: { children: React.ReactNode }) {
   const [searchState, dispatch] = useReducer(searchReducer, initialSearchState);
 
   return (
@@ -27,14 +31,6 @@ export function SearchProvider({ children }: Props) {
       <SearchDispatchContext.Provider value={dispatch}>{children}</SearchDispatchContext.Provider>
     </SearchContext.Provider>
   );
-}
-
-export function useSearch() {
-  return useContext(SearchContext);
-}
-
-export function useSearchDispatch() {
-  return useContext(SearchDispatchContext);
 }
 
 function searchReducer(searchState: SearchStateType, action: Action) {
@@ -53,5 +49,5 @@ function searchReducer(searchState: SearchStateType, action: Action) {
 
 const initialSearchState: SearchStateType = {
   placeholder: 'Custom placeholder text goes here',
-  searchTextField: ''
+  searchTextField: 'test'
 };

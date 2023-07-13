@@ -1,9 +1,17 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSearchState } from '~/context/search-context';
+import { SearchContext } from '~/context/search-context';
+import { useContext } from 'react';
 
 export default function SearchBar() {
   const router = useRouter();
   const currentRoute = router.pathname;
+
+  const searchState = useContext(SearchContext);
+
+  console.log('Placholder');
+  console.log(searchState?.searchTextField);
 
   return (
     <section className="full-width-container-wrapper py-5 bg-primary text-white">
@@ -26,7 +34,7 @@ export default function SearchBar() {
         <form className="search-component">
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div className="input-group input-group-lg">
-              <input type="text" className="form-control" placeholder="Search" />
+              <input type="text" className="form-control" placeholder={searchState?.placeholder} />
               <button type="button" className="btn-close" disabled aria-label="Close"></button>
               <button type="button" id="search-btn" className="btn btn-btn-outline-secondary">
                 <i className="fas fa-search" aria-hidden="true"></i>
