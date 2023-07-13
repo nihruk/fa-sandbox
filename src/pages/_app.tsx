@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import Layout from '~/components/layout/layout';
 import '~/styles/globals.css';
+import { SearchProvider } from '~/context/SearchContext';
 
 import {
   Hydrate,
@@ -28,7 +29,9 @@ export default function MyApp({
       </Head>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <Component {...pageProps} />
+          <SearchProvider>
+            <Component {...pageProps} />
+          </SearchProvider>
         </Hydrate>
         <ReactQueryDevtools />
       </QueryClientProvider>
