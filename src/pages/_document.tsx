@@ -3,6 +3,7 @@ export default function Document() {
   return (
     <Html lang="en">
       <Head>
+        <link rel="icon" href="/favicon.ico" />
         <link
           rel="stylesheet"
           href="https://unpkg.com/@nihruk/design-system@latest/dist/design-system.bundle.css"

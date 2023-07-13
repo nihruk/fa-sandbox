@@ -5,28 +5,28 @@ import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
 import { getLatestAwards } from '~/utils/award-util';
 
 import LatestAwards from '~/components/awards/latest-awards';
-import Loader from '~/components/ui/loader';
-import Error from '~/components/ui/error';
+import Spinner from '~/components/ui/spinner';
+import Alert from '~/components/ui/alert';
 
 export default function HomePage() {
   const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Spinner />;
 
-  if (error) return <Error error={error.toString()} />;
+  if (error) return <Alert variant="danger" error={error.toString()} />;
 
   return (
     <>
       <Head>
         <title>NIHR Funding and Awards</title>
         <meta name="description" content="" />
-        <link rel="icon" href="/favicon.ico" />
       </Head>
 
       {data && (
-        <div className="container">
+        <>
+          <h3>Latest Awards</h3>
           <LatestAwards awards={data.documents} />
-        </div>
+        </>
       )}
     </>
   );

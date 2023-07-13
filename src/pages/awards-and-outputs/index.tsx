@@ -6,15 +6,18 @@ import { getLatestAwards } from '~/utils/award-util';
 
 import Awards from '~/components/awards/awards';
 import Outputs from '~/components/outputs/outputs';
-import Loader from '~/components/ui/loader';
-import Error from '~/components/ui/error';
+import Spinner from '~/components/ui/spinner';
+import Alert from '~/components/ui/alert';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 
 export default function AwardsAndOutputsPage() {
   const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return <Spinner />;
 
-  if (error) return <Error error={error.toString()} />;
+  if (error) return <Alert variant="danger" error={error.toString()} />;
+
   return (
     <>
       <Head>
@@ -22,11 +25,18 @@ export default function AwardsAndOutputsPage() {
         <meta name="description" content="" />
       </Head>
       {data && (
-        <div className="container">
-          <h2>Awards</h2>
-          <Awards awards={data.documents} />
-          <Outputs />
-        </div>
+        <>
+          <Tabs defaultActiveKey="awards" className="mb-3">
+            <Tab eventKey="awards" title="Awards">
+              <h2>Awards</h2>
+              <Awards awards={data.documents} />
+            </Tab>
+            <Tab eventKey="outputs" title="Outputs">
+              <h2>Outputs</h2>
+              <Outputs />
+            </Tab>
+          </Tabs>
+        </>
       )}
     </>
   );

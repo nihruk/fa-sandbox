@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import Image from 'next/image';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
 export default function Header() {
   return (
     <>
       <header className="pt-3 pb-3 bg-white main-header">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8">
+        <Container>
+          <Row>
+            <Col md={8}>
               <Link
                 href="/"
                 title="National Institute for Health and Care Research (NIHR)"
@@ -19,9 +23,9 @@ export default function Header() {
                   height={40}
                 />
               </Link>
-            </div>
-          </div>
-        </div>
+            </Col>
+          </Row>
+        </Container>
       </header>
     </>
   );
