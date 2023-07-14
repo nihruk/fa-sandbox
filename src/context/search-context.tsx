@@ -1,26 +1,38 @@
-import { createContext, useContext, useReducer, type ReactNode, type Dispatch } from 'react';
+import { createContext, useContext, useReducer, type Dispatch } from 'react';
 
 type SearchStateType = {
   placeholder: string;
-  searchTextField: string;
+  searchText: string;
 };
 
-type Action = {
-  type: string;
-};
+type updateSearchField = { type: 'updateSearchField'; text: string };
+type clearSearchField = { type: 'clearSearchField' };
+type Actions = updateSearchField | clearSearchField;
 
-type SearchDispatchType = Dispatch<Action>;
+type SearchDispatchType = Dispatch<Actions>;
 
 export const SearchContext = createContext<SearchStateType | null>(null);
 
 export const SearchDispatchContext = createContext<SearchDispatchType | null>(null);
 
 export function useSearchState() {
-  return useContext(SearchContext);
+  const state = useContext(SearchContext);
+
+  if (!state) {
+    throw new Error('useSearchState must be used within a SearchStateProvider');
+  }
+
+  return state;
 }
 
 export function useSearchStateDispatch() {
-  return useContext(SearchDispatchContext);
+  const dispatch = useContext(SearchDispatchContext);
+
+  if (!dispatch) {
+    throw new Error('useSearchStateDispatch must be used within a SearchStateProvider');
+  }
+
+  return dispatch;
 }
 
 export function SearchStateProvider({ children }: { children: React.ReactNode }) {
@@ -33,21 +45,27 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
   );
 }
 
-function searchReducer(searchState: SearchStateType, action: Action) {
+function searchReducer(searchState: SearchStateType, action: Actions) {
   switch (action.type) {
-    case 'clearSearch': {
+    case 'updateSearchField': {
       return {
         ...searchState,
-        searchTextField: ''
+        searchText: action.text
+      };
+    }
+    case 'clearSearchField': {
+      return {
+        ...searchState,
+        searchText: ''
       };
     }
     default: {
-      throw Error('Unknown action:' + action.type);
+      throw Error('Unknown action:');
     }
   }
 }
 
 const initialSearchState: SearchStateType = {
   placeholder: 'Custom placeholder text goes here',
-  searchTextField: 'test'
+  searchText: ''
 };
