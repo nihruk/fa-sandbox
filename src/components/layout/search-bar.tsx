@@ -25,7 +25,7 @@ export default function SearchBar() {
       {/* Visible only on the homepage*/}
 
       <div className="container">
-        <form className="search-component">
+        <form className="search-component" onSubmit={e => ctx.submitQuery(e)}>
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div className="input-group input-group-lg">
               <input
@@ -44,7 +44,7 @@ export default function SearchBar() {
                 onClick={() => ctx.clearText()}></button>
 
               <button
-                type="button"
+                type="submit"
                 id="search-btn"
                 className="btn btn-btn-outline-secondary"
                 {...(ctx.text === '' ? { disabled: true } : {})}>

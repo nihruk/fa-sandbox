@@ -1,5 +1,7 @@
 import { createContext, useContext, useReducer } from 'react';
 
+import { useRouter } from 'next/router';
+
 type SearchStateType = {
   placeholder: string;
   text: string;
@@ -10,10 +12,12 @@ type SearchContextType = {
   text: string;
   updateText: (text: string) => void;
   clearText: () => void;
+  submitQuery: (e: React.FormEvent<HTMLFormElement>) => void;
 };
+type SUBMIT = { type: 'SUBMIT' };
 type CLEAR = { type: 'CLEAR' };
 type UPDATE = { type: 'UPDATE'; text: string };
-type Actions = UPDATE | CLEAR;
+type Actions = UPDATE | CLEAR | SUBMIT;
 
 export const SearchContext = createContext<SearchContextType | null>(null);
 
@@ -48,6 +52,7 @@ function searchReducer(state: SearchStateType, action: Actions) {
 }
 
 export function SearchStateProvider({ children }: { children: React.ReactNode }) {
+  const router = useRouter();
   const [state, dispatch] = useReducer(searchReducer, initialSearchState);
 
   const clearTextFieldHandler = () => {
@@ -63,11 +68,18 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
     });
   };
 
+  const submitQueryHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('submitting query');
+    await router.push(`/awards-and-outputs?text=${state.text}`);
+  };
+
   const serachContext = {
     placeholder: state.placeholder,
     text: state.text,
     clearText: clearTextFieldHandler,
-    updateText: updateSearchFieldHandler
+    updateText: updateSearchFieldHandler,
+    submitQuery: submitQueryHandler
   };
 
   return <SearchContext.Provider value={serachContext}>{children}</SearchContext.Provider>;
@@ -77,5 +89,6 @@ const initialSearchState: SearchContextType = {
   placeholder: 'Search for awards and outputs',
   text: '',
   clearText: () => undefined,
-  updateText: () => undefined
+  updateText: () => undefined,
+  submitQuery: () => undefined
 };
