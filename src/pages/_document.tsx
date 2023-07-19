@@ -12,6 +12,7 @@ export default function Document() {
           src="https://unpkg.com/@nihruk/design-system@latest/dist/design-system.bundle.js"
           async
         />
+        <script src="https://kit.fontawesome.com/5a8d655066.js" async></script>
       </Head>
 
       <body>

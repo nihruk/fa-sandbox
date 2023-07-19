@@ -1,13 +1,11 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useSearchState, useSearchStateDispatch } from '~/context/search-context';
+import { useSearchState } from '~/context/search-context';
 
 export default function SearchBar() {
   const router = useRouter();
   const currentRoute = router.pathname;
-
-  const searchState = useSearchState();
-  const dispatch = useSearchStateDispatch();
+  const ctx = useSearchState();
 
   return (
     <section className="full-width-container-wrapper py-5 bg-primary text-white">
@@ -33,30 +31,23 @@ export default function SearchBar() {
               <input
                 type="text"
                 className="form-control"
-                placeholder={searchState?.placeholder}
-                value={searchState?.searchText}
-                onChange={e => {
-                  dispatch({
-                    type: 'updateSearchField',
-                    text: e.target.value
-                  });
-                }}
+                placeholder={ctx.placeholder}
+                value={ctx.text}
+                onChange={e => ctx.updateText(e.target.value)}
               />
+
               <button
                 type="button"
                 className="btn-close"
-                aria-label="Clear input"
-                {...(searchState?.searchText === '' ? { disabled: true } : {})}
-                onClick={() => {
-                  dispatch({
-                    type: 'clearSearchField'
-                  });
-                }}></button>
+                aria-label="Clear search input"
+                {...(ctx.text === '' ? { disabled: true } : {})}
+                onClick={() => ctx.clearText()}></button>
+
               <button
                 type="button"
                 id="search-btn"
                 className="btn btn-btn-outline-secondary"
-                {...(searchState?.searchText === '' ? { disabled: true } : {})}>
+                {...(ctx.text === '' ? { disabled: true } : {})}>
                 <i className="fas fa-search" aria-hidden="true"></i>
               </button>
             </div>

@@ -1,19 +1,21 @@
-import { createContext, useContext, useReducer, type Dispatch } from 'react';
+import { createContext, useContext, useReducer } from 'react';
 
 type SearchStateType = {
   placeholder: string;
-  searchText: string;
+  text: string;
 };
 
-type updateSearchField = { type: 'updateSearchField'; text: string };
-type clearSearchField = { type: 'clearSearchField' };
-type Actions = updateSearchField | clearSearchField;
+type SearchContextType = {
+  placeholder: string;
+  text: string;
+  updateText: (text: string) => void;
+  clearText: () => void;
+};
+type CLEAR = { type: 'CLEAR' };
+type UPDATE = { type: 'UPDATE'; text: string };
+type Actions = UPDATE | CLEAR;
 
-type SearchDispatchType = Dispatch<Actions>;
-
-export const SearchContext = createContext<SearchStateType | null>(null);
-
-export const SearchDispatchContext = createContext<SearchDispatchType | null>(null);
+export const SearchContext = createContext<SearchContextType | null>(null);
 
 export function useSearchState() {
   const state = useContext(SearchContext);
@@ -25,47 +27,55 @@ export function useSearchState() {
   return state;
 }
 
-export function useSearchStateDispatch() {
-  const dispatch = useContext(SearchDispatchContext);
-
-  if (!dispatch) {
-    throw new Error('useSearchStateDispatch must be used within a SearchStateProvider');
-  }
-
-  return dispatch;
-}
-
-export function SearchStateProvider({ children }: { children: React.ReactNode }) {
-  const [searchState, dispatch] = useReducer(searchReducer, initialSearchState);
-
-  return (
-    <SearchContext.Provider value={searchState}>
-      <SearchDispatchContext.Provider value={dispatch}>{children}</SearchDispatchContext.Provider>
-    </SearchContext.Provider>
-  );
-}
-
-function searchReducer(searchState: SearchStateType, action: Actions) {
+function searchReducer(state: SearchStateType, action: Actions) {
   switch (action.type) {
-    case 'updateSearchField': {
+    case 'UPDATE': {
       return {
-        ...searchState,
-        searchText: action.text
+        ...state,
+        text: action.text
       };
     }
-    case 'clearSearchField': {
+    case 'CLEAR': {
       return {
-        ...searchState,
-        searchText: ''
+        ...state,
+        text: ''
       };
     }
     default: {
-      throw Error('Unknown action:');
+      throw Error('Unknown action type');
     }
   }
 }
 
-const initialSearchState: SearchStateType = {
-  placeholder: 'Custom placeholder text goes here',
-  searchText: ''
+export function SearchStateProvider({ children }: { children: React.ReactNode }) {
+  const [state, dispatch] = useReducer(searchReducer, initialSearchState);
+
+  const clearTextFieldHandler = () => {
+    dispatch({
+      type: 'CLEAR'
+    });
+  };
+
+  const updateSearchFieldHandler = (text: string) => {
+    dispatch({
+      type: 'UPDATE',
+      text: text
+    });
+  };
+
+  const serachContext = {
+    placeholder: state.placeholder,
+    text: state.text,
+    clearText: clearTextFieldHandler,
+    updateText: updateSearchFieldHandler
+  };
+
+  return <SearchContext.Provider value={serachContext}>{children}</SearchContext.Provider>;
+}
+
+const initialSearchState: SearchContextType = {
+  placeholder: 'Search for awards and outputs',
+  text: '',
+  clearText: () => undefined,
+  updateText: () => undefined
 };

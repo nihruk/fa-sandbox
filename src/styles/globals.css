@@ -1,8 +1,11 @@
+@import 'https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400&display=swap';
+
 html,
 body {
   padding: 0;
   margin: 0;
   background-color: #193e72;
+  font-family: 'Lato', sans-serif;
 }
 
 main {
@@ -17,4 +20,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.btn-close {
+  z-index: 9999;
 }
