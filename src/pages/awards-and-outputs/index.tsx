@@ -2,7 +2,8 @@ import { type GetStaticProps } from 'next';
 import Head from 'next/head';
 
 import { dehydrate, QueryClient, useQuery } from '@tanstack/react-query';
-import { getLatestAwards } from '~/utils/award-util';
+import { getLatestAwards, getSearchResults } from '~/utils/award-util';
+import { useSearchState } from '~/context/search-context';
 
 import Awards from '~/components/awards/awards';
 import Outputs from '~/components/outputs/outputs';
@@ -12,11 +13,20 @@ import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 
 export default function AwardsAndOutputsPage() {
-  const { isLoading, error, data } = useQuery(['getLatestAwards'], () => getLatestAwards());
+  const ctx = useSearchState();
+  const query = ctx.query;
+  const status = ctx.status;
+  const changeStatus = ctx.statusHandler;
 
-  if (isLoading) return <Spinner />;
-
-  if (error) return <Alert variant="danger" error={error.toString()} />;
+  const {
+    isLoading: loadingSearchResults,
+    error: errorSearchResults,
+    data: dataSearchResults
+  } = useQuery(['getSearchResults', query], () => getSearchResults(query), {
+    enabled: status === 'submitting'
+  });
+  if (loadingSearchResults) return <Spinner />;
+  if (errorSearchResults) return <Alert variant="danger" message={errorSearchResults.toString()} />;
 
   return (
     <>
@@ -24,12 +34,12 @@ export default function AwardsAndOutputsPage() {
         <title>Awards and Outputs | NIHR Funding and Awards</title>
         <meta name="description" content="" />
       </Head>
-      {data && (
+      {dataSearchResults && (
         <>
           <Tabs defaultActiveKey="awards" className="mb-3">
             <Tab eventKey="awards" title="Awards">
               <h2>Awards</h2>
-              <Awards awards={data.documents} />
+              <Awards awards={dataSearchResults.documents} />
             </Tab>
             <Tab eventKey="outputs" title="Outputs">
               <h2>Outputs</h2>

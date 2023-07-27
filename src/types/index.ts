@@ -1,5 +1,7 @@
 import { type Url } from 'next/dist/shared/lib/router/router';
 
+export type Status = 'typing' | 'submitting' | 'success' | 'clear';
+
 export type Data = {
   numFound: number;
   documents: Award[];
