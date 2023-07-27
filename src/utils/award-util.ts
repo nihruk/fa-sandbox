@@ -14,6 +14,13 @@ export async function getAwardById(awardId: string) {
   return award;
 }
 
+export async function getSearchResults(query: string) {
+  const response = await fetch(`https://fundingawards.nihr.ac.uk/api/projects?search=${query}`);
+  const data = (await response.json()) as Data;
+
+  return data;
+}
+
 export function convertAwardData(awardDate: string) {
   const convertedDate = new Date(awardDate).toLocaleDateString('en-GB', {
     month: 'long',
