@@ -28,7 +28,7 @@ export default function SearchBar() {
       {/* Visible only on the homepage*/}
 
       <div className="container">
-        <form className="search-component" onSubmit={e => ctx.submitQueryHandler(e)}>
+        <form className="search-component" onSubmit={e => ctx.submitHandler(e)}>
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div className="input-group input-group-lg">
               <input
@@ -38,21 +38,21 @@ export default function SearchBar() {
                 className="form-control"
                 placeholder={ctx.placeholder}
                 value={ctx.text}
-                onChange={() => ctx.updateText(inputRef.current?.value || '')}
+                onChange={() => ctx.updateInput(inputRef.current?.value || '')}
               />
 
               <button
                 type="reset"
                 className="btn-close"
                 aria-label="Clear search input"
-                {...(ctx.text === '' || ctx.status === 'clear' ? { disabled: true } : {})}
-                onClick={() => ctx.clearText()}></button>
+                {...(ctx.text === '' || ctx.status === 'idle' ? { disabled: true } : {})}
+                onClick={() => ctx.clearInput()}></button>
 
               <button
                 type="submit"
                 id="search-btn"
                 className="btn btn-btn-outline-secondary"
-                {...(ctx.status === 'clear' ? { disabled: true } : {})}>
+                {...(ctx.status === 'idle' ? { disabled: true } : {})}>
                 <i className="fas fa-search" aria-hidden="true"></i>
               </button>
             </div>
@@ -87,9 +87,11 @@ export default function SearchBar() {
       </div>
       {/* end of container */}
 
-      <div className="container">Status: {ctx.status}</div>
-      <div className="container">Text: {ctx.text}</div>
-      <div className="container">Query: {ctx.query}</div>
+      <div className="container">
+        <div><strong>Status:</strong> {ctx.status}</div>
+        <div><strong>Input:</strong> {ctx.text}</div>
+        <div><strong>Query:</strong> {ctx.query}</div>
+      </div>
     </section>
   );
 }

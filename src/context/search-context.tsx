@@ -16,9 +16,9 @@ type SearchContextType = {
   text: string;
   query: string;
   status: Status;
-  updateText: (text: string) => void;
-  clearText: () => void;
-  submitQueryHandler: (e: React.FormEvent<HTMLFormElement>) => void;
+  updateInput: (text: string) => void;
+  clearInput: () => void;
+  submitHandler: (e: React.FormEvent<HTMLFormElement>) => void;
   statusHandler: (status: Status) => void;
 };
 
@@ -82,11 +82,10 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
   const [state, dispatch] = useReducer(searchReducer, initialSearchState);
 
   const statusHandler = (status: Status) => {
-    // dispatch({
-    //   type: 'STATUS',
-    //   status: status
-    // });
-    console.log('statusHandler', status);
+    dispatch({
+      type: 'STATUS',
+      status: status
+    });
   };
 
   const updateSearchFieldHandler = (text: string) => {
@@ -97,18 +96,19 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
         status: 'typing'
       });
     } else {
-      clearTextFieldHandler();
+      clearInputFieldHandler();
     }
   };
 
-  const clearTextFieldHandler = () => {
+  const clearInputFieldHandler = () => {
     dispatch({
       type: 'CLEAR',
-      status: 'clear'
+      status: 'idle'
     });
+    // TO DO: clear the query param form the url
   };
 
-  const submitQueryHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch({ type: 'SUBMIT', text: state.text, status: 'submitting', query: state.text });
     await router.push(`/awards-and-outputs/test?text=${state.text}`);
@@ -120,9 +120,9 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
     text: state.text,
     query: state.query,
     status: state.status,
-    clearText: clearTextFieldHandler,
-    updateText: updateSearchFieldHandler,
-    submitQueryHandler: submitQueryHandler,
+    clearInput: clearInputFieldHandler,
+    updateInput: updateSearchFieldHandler,
+    submitHandler: submitHandler,
     statusHandler: statusHandler
   };
 
@@ -133,9 +133,9 @@ const initialSearchState: SearchContextType = {
   placeholder: 'Search for awards and outputs',
   text: '',
   query: '',
-  status: 'clear',
-  clearText: () => undefined,
-  updateText: () => undefined,
-  submitQueryHandler: () => undefined,
+  status: 'idle',
+  clearInput: () => undefined,
+  updateInput: () => undefined,
+  submitHandler: () => undefined,
   statusHandler: () => undefined
 };
