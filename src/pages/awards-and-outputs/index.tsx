@@ -17,17 +17,36 @@ export default function AwardsAndOutputsPage() {
   const query = ctx.query;
   const status = ctx.status;
 
-  console.log('re-rendering -- test page');
+  console.log('re-rendering -- listing page');
 
   const {
-    isLoading: loadingSearchResults,
+    isLoading: loadingDefaultContent,
+    error: errorDefaultContent,
+    data: dataDefaultContent
+  } = useQuery(['getLatestAwards'], () => getLatestAwards());
+
+  const {
+    isFetching: loadingSearchResults,
     error: errorSearchResults,
     data: dataSearchResults
   } = useQuery(['getSearchResults', query], () => getSearchResults(query), {
     enabled: status === 'submitting'
   });
+
+  if (loadingDefaultContent) return <Spinner />;
+  if (errorDefaultContent)
+    return <Alert variant="danger" message={errorDefaultContent.toString()} />;
+
   if (loadingSearchResults) return <Spinner />;
   if (errorSearchResults) return <Alert variant="danger" message={errorSearchResults.toString()} />;
+
+  let data;
+
+  if (!dataSearchResults) {
+    data = dataDefaultContent?.documents;
+  } else {
+    data = dataSearchResults?.documents;
+  }
 
   return (
     <>
@@ -35,13 +54,14 @@ export default function AwardsAndOutputsPage() {
         <title>Awards and Outputs | NIHR Funding and Awards</title>
         <meta name="description" content="" />
       </Head>
-      <h1>{query}</h1>
-      {dataSearchResults && (
+      {query && <h1>{query}</h1>}
+
+      {data && (
         <>
           <Tabs defaultActiveKey="awards" className="mb-3">
             <Tab eventKey="awards" title="Awards">
               <h2>Awards</h2>
-              <Awards awards={dataSearchResults.documents} />
+              <Awards awards={data} />
             </Tab>
             <Tab eventKey="outputs" title="Outputs">
               <h2>Outputs</h2>
