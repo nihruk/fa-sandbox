@@ -68,7 +68,8 @@ function searchReducer(state: SearchStateType, action: Actions) {
       return {
         ...state,
         status: action.status,
-        text: ''
+        text: '',
+        query: ''
       };
     }
     default: {
