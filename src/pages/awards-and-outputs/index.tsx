@@ -16,7 +16,8 @@ export default function AwardsAndOutputsPage() {
   const ctx = useSearchState();
   const query = ctx.query;
   const status = ctx.status;
-  const changeStatus = ctx.statusHandler;
+
+  console.log('re-rendering -- test page');
 
   const {
     isLoading: loadingSearchResults,
@@ -34,6 +35,7 @@ export default function AwardsAndOutputsPage() {
         <title>Awards and Outputs | NIHR Funding and Awards</title>
         <meta name="description" content="" />
       </Head>
+      <h1>{query}</h1>
       {dataSearchResults && (
         <>
           <Tabs defaultActiveKey="awards" className="mb-3">
