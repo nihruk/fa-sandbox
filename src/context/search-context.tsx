@@ -88,7 +88,7 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
     });
   };
 
-  const updateSearchFieldHandler = (text: string) => {
+  const updateSearchFieldHandler = async (text: string) => {
     if (text.length > 0) {
       dispatch({
         type: 'UPDATE',
@@ -96,22 +96,25 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
         status: 'typing'
       });
     } else {
-      clearInputFieldHandler();
+      await clearInputFieldHandler();
     }
   };
 
-  const clearInputFieldHandler = () => {
+  const clearInputFieldHandler = async () => {
     dispatch({
       type: 'CLEAR',
       status: 'idle'
     });
-    // TO DO: clear the query param form the url
+    await router.push({ query: {} });
   };
 
   const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch({ type: 'SUBMIT', text: state.text, status: 'submitting', query: state.text });
-    await router.push(`/awards-and-outputs/test?text=${state.text}`);
+    await router.push({
+      pathname: '/awards-and-outputs',
+      query: { q: state.text }
+    });
     dispatch({ type: 'STATUS', status: 'success' });
   };
 
