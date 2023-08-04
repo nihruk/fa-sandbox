@@ -28,7 +28,7 @@ export default function SearchBar() {
       {/* Visible only on the homepage*/}
 
       <div className="container">
-        <form className="search-component" onSubmit={e => ctx.submitHandler(e)}>
+        <form className="search-component" onSubmit={e => ctx.handleSubmit(e)}>
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div className="input-group input-group-lg">
               <input
@@ -87,10 +87,18 @@ export default function SearchBar() {
       </div>
       {/* end of container */}
 
-      <div className="container">
-        <div><strong>Status:</strong> {ctx.status}</div>
-        <div><strong>Input:</strong> {ctx.text}</div>
-        <div><strong>Query:</strong> {ctx.query}</div>
+      <div className="container" style={{ color: 'pink' }}>
+        <div>
+          <strong>Status:</strong> {ctx.status}
+        </div>
+
+        <div>
+          <strong>Input:</strong> {ctx.text}
+        </div>
+
+        <div>
+          <strong>Query:</strong> {ctx.query}
+        </div>
       </div>
     </section>
   );

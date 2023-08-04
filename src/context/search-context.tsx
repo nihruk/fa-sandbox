@@ -2,12 +2,16 @@ import { createContext, useContext, useReducer } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { type Status } from '~/types';
+export type Status = 'idle' | 'typing' | 'submitting' | 'success';
 
 type SearchStateType = {
   placeholder: string;
   text: string;
   query: string;
+  sortBy: string;
+  sortDesc: boolean;
+  defFilterParams: string;
+  filterParams: string;
   status: Status;
 };
 
@@ -15,10 +19,14 @@ type SearchContextType = {
   placeholder: string;
   text: string;
   query: string;
+  sortBy: string;
+  sortDesc: boolean;
+  defFilterParams: string;
+  filterParams: string;
   status: Status;
   updateInput: (text: string) => void;
   clearInput: () => void;
-  submitHandler: (e: React.FormEvent<HTMLFormElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   statusHandler: (status: Status) => void;
 };
 
@@ -109,7 +117,7 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
     await router.push({ query: {} });
   };
 
-  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     dispatch({ type: 'SUBMIT', text: state.text, status: 'submitting', query: state.text });
     await router.push({
@@ -123,10 +131,14 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
     placeholder: state.placeholder,
     text: state.text,
     query: state.query,
+    sortBy: state.sortBy,
+    sortDesc: state.sortDesc,
+    defFilterParams: state.defFilterParams,
+    filterParams: state.filterParams,
     status: state.status,
     clearInput: clearInputFieldHandler,
     updateInput: updateSearchFieldHandler,
-    submitHandler: submitHandler,
+    handleSubmit: handleSubmit,
     statusHandler: statusHandler
   };
 
@@ -135,11 +147,15 @@ export function SearchStateProvider({ children }: { children: React.ReactNode })
 
 const initialSearchState: SearchContextType = {
   placeholder: 'Search for awards and outputs',
+  defFilterParams: '&filter=',
   text: '',
   query: '',
+  sortBy: 'score',
+  sortDesc: true,
+  filterParams: '&filter=',
   status: 'idle',
   clearInput: () => undefined,
   updateInput: () => undefined,
-  submitHandler: () => undefined,
+  handleSubmit: () => undefined,
   statusHandler: () => undefined
 };
