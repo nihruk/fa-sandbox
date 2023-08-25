@@ -28,7 +28,7 @@ export default function SearchBar() {
       {/* Visible only on the homepage*/}
 
       <div className="container">
-        <form className="search-component" onSubmit={e => ctx.handleSubmit(e)}>
+        <form className="search-form" onSubmit={e => ctx.handleSubmit(e)}>
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div className="input-group input-group-lg">
               <input
