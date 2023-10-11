@@ -36,10 +36,8 @@ jobs:
           path: ~/.npm
           key: npm-${{ hashFiles('**/package-lock.json') }}
 
-      - name: Build and Start
-        run: |
-          npm run build
-          npm start
-
       - name: Run Cypress tests
-        uses: cypress-io/github-action@v6
+        uses: cypress-io/github-action@v6.3.0
+        with:
+          build: npm run build
+          start: npm start
