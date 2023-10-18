@@ -1,7 +1,7 @@
 describe("Home Page", () => {
   it("displays the home page", () => {
     // Visit homepage
-    cy.visit("http://localhost:3000");
+    cy.visit("/");
 
     // Latest awards component is loaded with data(6 items)
     cy.get(".latest-awards-component")
