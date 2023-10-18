@@ -4,9 +4,10 @@ describe("Home Page", () => {
     cy.visit("http://localhost:3000");
 
     // Latest awards component is loaded with data(6 items)
-    cy.get("h3").should("contain", "Latest Awards");
-
-    cy.contains("h3", "Latest Awards").should("exist");
+    cy.get(".latest-awards-component")
+      .get("h3")
+      .first()
+      .should("contain", "Latest Awards");
 
     cy.get(".latest-awards-component").find(".row").should("have.length", 6);
   });
