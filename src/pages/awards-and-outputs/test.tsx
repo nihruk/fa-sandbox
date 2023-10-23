@@ -16,49 +16,18 @@ export default function AwardsAndOutputsPage() {
   const ctx = useSearchState();
   const query = ctx.query;
   const status = ctx.status;
-  const page = 2;
 
-  const escapedValue = encodeURIComponent(query.trim());
-  const filterParams = ctx.filterParams;
-  const sortStr = ctx.sortDesc ? 'desc' : 'asc';
-  const sort = '&sort=' + ctx.sortBy + ':' + sortStr;
-
-  console.log('re-rendering -- listing page');
+  console.log('re-rendering -- test page');
 
   const {
-    isLoading: loadingDefaultContent,
-    error: errorDefaultContent,
-    data: dataDefaultContent
-  } = useQuery(['getLatestAwards', page], () => getLatestAwards());
-
-  const {
-    isFetching: loadingSearchResults,
+    isLoading: loadingSearchResults,
     error: errorSearchResults,
     data: dataSearchResults
-  } = useQuery(
-    ['getSearchResults', escapedValue],
-    () => getSearchResults(escapedValue, filterParams, sort),
-    {
-      enabled: status === 'submitting'
-    }
-  );
-
-  if (loadingDefaultContent) return <Spinner />;
-  if (errorDefaultContent)
-    return <Alert variant="danger" message={errorDefaultContent.toString()} />;
-
+  } = useQuery(['getSearchResults', query], () => getSearchResults(query), {
+    enabled: status === 'submitting'
+  });
   if (loadingSearchResults) return <Spinner />;
   if (errorSearchResults) return <Alert variant="danger" message={errorSearchResults.toString()} />;
-
-  let documents, numFound;
-
-  if (!dataSearchResults) {
-    documents = dataDefaultContent?.documents;
-    numFound = dataDefaultContent?.numFound;
-  } else {
-    documents = dataSearchResults?.documents;
-    numFound = dataSearchResults?.numFound;
-  }
 
   return (
     <>
@@ -66,15 +35,13 @@ export default function AwardsAndOutputsPage() {
         <title>Awards and Outputs | NIHR Funding and Awards</title>
         <meta name="description" content="" />
       </Head>
-      {query && <h1>{query}</h1>}
-      <div>numFound: {numFound}</div>
-
-      {documents && (
+      <h1>{query}</h1>
+      {dataSearchResults && (
         <>
           <Tabs defaultActiveKey="awards" className="mb-3">
             <Tab eventKey="awards" title="Awards">
               <h2>Awards</h2>
-              <Awards awards={documents} />
+              <Awards awards={dataSearchResults.documents} />
             </Tab>
             <Tab eventKey="outputs" title="Outputs">
               <h2>Outputs</h2>

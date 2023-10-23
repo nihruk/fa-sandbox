@@ -7,6 +7,15 @@ export async function getLatestAwards() {
   return data;
 }
 
+export async function getSearchResults(escapedValue: string, filterParams: string, sort: string) {
+  const response = await fetch(
+    'https://fundingawards.nihr.ac.uk/api/projects?search=' + escapedValue + filterParams + sort
+  );
+  const data = (await response.json()) as Data;
+
+  return data;
+}
+
 export async function getAwardById(awardId: string) {
   const response = await fetch(`https://fundingawards.nihr.ac.uk/api/project?id=${awardId}`);
   const award: Award = (await response.json()) as Award;

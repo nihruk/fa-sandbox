@@ -21,6 +21,7 @@ export default function Header() {
                   alt="National Institute for Health and Care Research (NIHR)"
                   width={400}
                   height={40}
+                  priority={true}
                 />
               </Link>
             </Col>

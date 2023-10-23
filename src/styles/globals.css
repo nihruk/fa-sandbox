@@ -2,12 +2,20 @@ html,
 body {
   padding: 0;
   margin: 0;
-  background-color: #193e72;
+  font-family: 'Lato', sans-serif;
+  width: 100%;
+  height: 100%;
+}
+
+#__next {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 main {
   padding: 20px 0;
-  background-color: #fff;
+  flex-grow: 1;
 }
 
 a {
@@ -17,4 +25,18 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+.btn-close {
+  z-index: 9999;
+}
+
+.bg-primary input[type='text']:focus {
+  border-color: #193e72;
+  box-shadow: 0 8px 8px rgba(0, 0, 0, 0.075) inset, 0 0 0 4px rgba(40, 100, 184, 1);
+  outline: 0 none;
+}
+
+.main-footer {
+  flex-shrink: 0;
 }

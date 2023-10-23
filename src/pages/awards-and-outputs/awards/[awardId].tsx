@@ -20,7 +20,7 @@ export default function AwardDetailsPage() {
 
   if (isLoading) return <Spinner />;
 
-  if (error) return <Alert variant="danger" error={error.toString()} />;
+  if (error) return <Alert variant="danger" message={error.toString()} />;
 
   // Dev & Testing purposes only
   const awardObject = Object.entries(data as Award).map(([key, value]) => {

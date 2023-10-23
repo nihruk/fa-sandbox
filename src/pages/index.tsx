@@ -13,7 +13,9 @@ export default function HomePage() {
 
   if (isLoading) return <Spinner />;
 
-  if (error) return <Alert variant="danger" error={error.toString()} />;
+  if (error) return <Alert variant="danger" message={error.toString()} />;
+
+  console.log('re-rendering -- home page');
 
   return (
     <>

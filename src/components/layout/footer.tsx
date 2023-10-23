@@ -51,6 +51,7 @@ export default function Footer() {
                 alt="Logo of the Department of Health & Social Care"
                 width={163}
                 height={195}
+                priority={true}
               />
             </Link>
           </div>
