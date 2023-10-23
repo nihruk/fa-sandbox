@@ -1,9 +1,13 @@
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useSearchState, useSearchStateDispatch } from '~/context/search-context';
 
 export default function SearchBar() {
   const router = useRouter();
   const currentRoute = router.pathname;
+
+  const searchState = useSearchState();
+  const dispatch = useSearchStateDispatch();
 
   return (
     <section className="full-width-container-wrapper py-5 bg-primary text-white">
@@ -26,9 +30,33 @@ export default function SearchBar() {
         <form className="search-component">
           <div className="d-grid gap-2 d-sm-flex justify-content-sm-center">
             <div className="input-group input-group-lg">
-              <input type="text" className="form-control" placeholder="Search" />
-              <button type="button" className="btn-close" disabled aria-label="Close"></button>
-              <button type="button" id="search-btn" className="btn btn-btn-outline-secondary">
+              <input
+                type="text"
+                className="form-control"
+                placeholder={searchState?.placeholder}
+                value={searchState?.searchText}
+                onChange={e => {
+                  dispatch({
+                    type: 'updateSearchField',
+                    text: e.target.value
+                  });
+                }}
+              />
+              <button
+                type="button"
+                className="btn-close"
+                aria-label="Clear input"
+                {...(searchState?.searchText === '' ? { disabled: true } : {})}
+                onClick={() => {
+                  dispatch({
+                    type: 'clearSearchField'
+                  });
+                }}></button>
+              <button
+                type="button"
+                id="search-btn"
+                className="btn btn-btn-outline-secondary"
+                {...(searchState?.searchText === '' ? { disabled: true } : {})}>
                 <i className="fas fa-search" aria-hidden="true"></i>
               </button>
             </div>
